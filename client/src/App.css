@@ -1,0 +1,12 @@
+#root {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.chakra-button {
+  border-radius: 18px !important;
+}
+
+.chakra-input {
+  border-radius: 18px !important;
+}

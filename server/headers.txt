@@ -1,0 +1,8 @@
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Length: 41
+Content-Type: application/json; charset=utf-8
+Date: Fri, 09 Aug 2024 03:37:51 GMT
+Etag: W/"29-LWd2y5pkylhik8/fko3dTXSASp0"
+Set-Cookie: authcookie=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0ZXZlcm92YTA1OTRAZ21haWwuY29tIiwiaWF0IjoxNzIzMTc0NjcxLCJleHAiOjE3MjMxNzgyNzF9.IqHfD9oD4o7mzp6Pc7j_CIHOlJNMQll81GWiAcMsn00; Max-Age=900; Path=/; Expires=Fri, 09 Aug 2024 03:52:51 GMT; HttpOnly, public_key=-----BEGIN%20RSA%20PUBLIC%20KEY-----%0AMIICCgKCAgEAsxaOXXO%2F6vv0DWjN7%2BtlsmFYL46rZGlMYub2rsU6rc%2FDfVRYLih6%0Ao%2BWIMRmz40zBBXjCRNz1u1LKky6KpRw65rJYqh0oJUyz0T0t6YpTYaDM7iV36vEy%0A1qyV%2BM0Kwn6LVGQhA8xo6r13JQBnIuAwhuP1Bqmfo3pVfzu0L0qqHA3bHuHagXzt%0AhFvOVbWD2%2B%2B30dQm5JVaf2aIo1AdJT84DVR6GBdqdxRxbIr%2FDRqnvGgy67%2BrGKfP%0A0uTvuyPtDVGVqmUtLa5suxjZNgiZN7krMq079o3nKeBAHmjiB4lCYM%2Bowsn%2Beazb%0A3tHwqmgkxNnPupA%2BgoedDQCMO2oQptisapdW0w8662a8Q5Z2j7ttnb2SfAR2e05f%0AwfOVFe21mX9IaPru16qNGq8QVSxxqkKfEfstC%2FCogmRWdLlq8%2Bc0PFM7O9NUfi%2BP%0ADHS59GS1CjogJkFfsgAnZvQSopnjJKn8ITdKtyYcNBiLtIlVhfbt4BAuE10XEN%2Fw%0AaXaEEK7FSj2BW7kz4GwDg%2BFRR8coWYog8M%2Bb4vnzvi2AFKitj9qE1b%2B6s3iaO4Ut%0A85kVw4PRjKqxnm0%2BlmTCvGhn%2BIOXjatG%2FoLFvOHzLLMpA8lW5E6JHsyU8aIZDSV0%0AnWH1MKwjGr5R535q%2FAil2jPsfqeqANhji8TJAkmzTGSqJrQfhc4sWoECAwEAAQ%3D%3D%0A-----END%20RSA%20PUBLIC%20KEY-----%0A; Path=/
+X-Powered-By: Express
