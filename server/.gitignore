@@ -128,3 +128,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+/src/helpers/id_rsa_private.pem
+/src/helpers/id_rsa_public.pem
