@@ -84,4 +84,4 @@ function getRandomLegoAvatar() {
   return avatar[Math.floor(Math.random() * avatar.length)];
 }
 
-export default getRandomLegoAvatar;
+export { getRandomLegoAvatar, avatar };
