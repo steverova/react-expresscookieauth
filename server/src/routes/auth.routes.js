@@ -11,7 +11,7 @@ const validation = userValidation();
 router.post("/register", validate(validation.create), service.register);
 router.post("/login", validate(validation.login), service.login);
 router.post("/logout", service.logout);
-
+router.post("verifyTurnstileToken", service.verifyTurnstileToken);
 router.get("/protected", authMiddleware, service.validateAuthCookies);
 router.get("/public_key", authMiddleware, service.getPublicKey);
 

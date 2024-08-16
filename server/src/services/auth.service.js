@@ -46,7 +46,7 @@ const AuthService = () => {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
-      }) 
+      })
       .status(StatusCodes.OK)
       .send({ message: "LOGIN_SUCCESS", data: verify.data.user });
   };
@@ -93,12 +93,42 @@ const AuthService = () => {
       .send({ message: "VALID_TOKEN", autorized: true, content: [] });
   };
 
+  const verifyTurnstileToken = async (req, res) => {
+    const { turnstileToken } = req.body;
+
+    try {
+      const response = await fetch(
+        "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({
+            secret: process.env.TURNSTILE_SECRET_KEY,
+            response: turnstileToken,
+          }).toString(),
+        }
+      );
+
+      const data = await response.json();
+
+      return res.status(200).send({ message: "VALID_TOKEN", content: data });
+    } catch (error) {
+      console.error("Error verifying Turnstile token:", error);
+      return res
+        .status(500)
+        .send({ message: "INVALID_TOKEN", error: error.message });
+    }
+  };
+
   return {
     login,
+    logout,
     register,
     getPublicKey,
     validateAuthCookies,
-    logout,
+    verifyTurnstileToken,
   };
 };
 
