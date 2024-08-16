@@ -10,16 +10,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@chakra-ui/icons": "^2.1.1",
-    "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
+    "@fontsource/roboto": "^5.0.14",
+    "@marsidev/react-turnstile": "^0.7.2",
+    "@mui/icons-material": "^5.16.7",
+    "@mui/material": "^5.16.7",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "axios": "^1.7.4",
     "framer-motion": "^11.3.27",
     "nanoid": "^5.0.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.0",
+    "styled-components": "^6.1.12",
     "zustand": "^4.5.5"
   },
   "devDependencies": {

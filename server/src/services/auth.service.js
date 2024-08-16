@@ -14,6 +14,8 @@ const AuthService = () => {
   const login = async (req, res) => {
     const { email, password } = req.body;
 
+    console.log({ email, password });
+
     const verify = await auth.verifyEmail(email);
 
     if (!verify.isFound) {

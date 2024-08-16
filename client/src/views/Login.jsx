@@ -1,23 +1,23 @@
+import { useState } from "react";
 import {
   Box,
-  Flex,
-  Heading,
-  Input,
+  Grid,
+  Typography,
+  TextField,
   Button,
-  FormControl,
-  FormLabel,
-  Image,
-} from "@chakra-ui/react";
-import welcome from "../assets/ilustrations/welcome.svg";
+  CssBaseline,
+} from "@mui/material";
 import useAuth from "../auth/useAuth";
-import { useState } from "react";
+import welcome from "../assets/ilustrations/welcome.svg";
+import CatchaWidget from "../plugins/Catcha";
 
 const Login = () => {
   const { singUp } = useAuth();
+  const [turntileToken, setTurntileToken] = useState()
 
   const [formValues, setFormValues] = useState({
-    email: "",
-    password: "",
+    email: "steverova0594@gmail.com",
+    password: "Hello$1234",
   });
 
   const handleChange = (e) => {
@@ -30,77 +30,99 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await singUp({
-      email: "steverova0594@gmail.com",
-      password: "Hello$1234",
-    });
+    await singUp(formValues);
   };
 
   return (
-    <Box style={{ backgroundColor: "#edf2f7" }}>
-      <Flex minHeight="100vh" width="100%">
-        {/* Columna Derecha */}
-        <Flex
-          flex={{ base: "1", sm: "1", md: "1" }}
-          align="center"
-          justify="center"
-          p={8}
-        >
-          <Box
-            className="bg-white sm:px-10 lg:px-20 py-12  rounded-[18px] shadow"
-            width="full"
-            maxWidth="md"
-          >
-            <Heading mb={6} textAlign="center">
-              Login
-            </Heading>
-            <form onSubmit={handleSubmit}>
-              <FormControl id="email" mb={4}>
-                <FormLabel>Email</FormLabel>
-                <Input
-                  name="email"
-                  
-                  value="steverova0594@gmail.com"
-                  onInput={handleChange}
-                  variant="filled"
-                  type="email"
-                />
-              </FormControl>
-              <FormControl id="password" mb={6}>
-                <FormLabel>Password</FormLabel>
-                <Input
-                  
-                  name="password"
-                  value="Hello$1234"
-                  onInput={handleChange}
-                  variant="filled"
-                  type="password"
-                />
-              </FormControl>
-              <Button type="submit" colorScheme="teal" width="full">
-                Login
-              </Button>
-            </form>
-          </Box>
-        </Flex>
-        {/* Columna Izquierda */}
+    <Grid container component="main" sx={{ height: "100vh" }}>
+      <CssBaseline />
+      {/* Columna Izquierda (Imagen) */}
+      <Grid
+  item
+  xs={false}
+  sm={false}
+  md={6}
+  lg={8}
+  sx={{
+    display: { xs: "none", md: "flex" },
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  <img className="h-3/5" src={welcome} alt="welcomeimage" />
+</Grid>
+
+      {/* Columna Derecha (Formulario) */}
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        md={6}
+        lg={4}
+        sx={{
+          backgroundColor: "#2c7a7b",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          p: 4,
+        }}
+      >
         <Box
-          flex="1"
-          display={{ base: "none", md: "flex" }} // Ocultar en pantallas pequeñas
-          alignItems="center" // Centrar verticalmente
-          justifyContent="center" // Centrar horizontalmente
-          bg="gray.100"
+          sx={{
+            boxShadow: 4,
+            width: "100%",
+            maxWidth: 400,
+            backgroundColor: "#f2f2f2",
+            borderRadius: "12px",
+            p: 5,
+          }}
         >
-          <Image
-            src={welcome}
-            alt="Login Image"
-            objectFit="cover"
-            height="20rem"
-            width="auto"
-          />
+          <Typography component="h1" variant="h5" align="center" gutterBottom>
+            Login
+          </Typography>
+          <Box component="form" noValidate onSubmit={handleSubmit}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email"
+              name="email"
+              
+              value={formValues.email}
+              onChange={handleChange}
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              value={formValues.password}
+              onChange={handleChange}
+              autoComplete="current-password"
+            />
+            <CatchaWidget onSuccess={setTurntileToken}/>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              sx={{ mt: 3 }}
+            >
+              Login
+            </Button>
+            {/* {turntileToken} */}
+          </Box>
         </Box>
-      </Flex>
-    </Box>
+      </Grid>
+    </Grid>
   );
 };
 

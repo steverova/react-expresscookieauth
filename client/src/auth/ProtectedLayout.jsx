@@ -3,28 +3,23 @@ import useAuth from "./useAuth";
 import { useEffect, useState } from "react";
 
 const ProtectedLayout = () => {
-  const { protectedRoute } = useAuth();
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const { isAuthenticated } = useAuth();
+  const [isAuth, setIsAuth] = useState(null);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  const fetchAuth = async () => {
+    const response = await isAuthenticated();
+    setIsAuth(response);
+  };
+
   useEffect(() => {
-    const checkAuthentication = async () => {
-      const result = await protectedRoute();
-      setIsAuthenticated(result.data.autorized);
-    };
-
-    checkAuthentication();
+    fetchAuth();
   }, []);
-
-  if (isAuthenticated === null) {
+  
+  if (isAuth === null) {
     return <div>Loading...</div>;
   }
 
-  return isAuthenticated ? (
-    <Outlet />
-  ) : (
-    <Navigate to="/signup" />
-  );
+  return isAuth ? <Outlet /> : <Navigate to="/signup" />;
 };
 
 export default ProtectedLayout;

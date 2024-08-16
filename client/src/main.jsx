@@ -1,14 +1,21 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
+import { purple, teal } from "@mui/material/colors";
+import { createTheme, ThemeProvider } from "@mui/material";
 
-import { ChakraProvider } from "@chakra-ui/react";
+const theme = createTheme({
+  palette: {
+    primary: teal,
+    secondary: purple,
+  },
+  shape: {
+    borderRadius: 12, // Cambia este valor para ajustar el redondeo
+  },
+});
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <ChakraProvider>
-      <App />
-    </ChakraProvider>
-  </StrictMode>
+  <ThemeProvider theme={theme}>
+    <App />
+  </ThemeProvider>
 );

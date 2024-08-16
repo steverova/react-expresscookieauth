@@ -1,10 +1,18 @@
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import "./app.css";
+
 import Login from "./views/Login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./app.css";
 import ProtectedLayout from "./auth/ProtectedLayout";
 import Unauthorized from "./views/Unauthorized";
 import Dashboard from "./views/dashboard";
+import NotFound from "./views/NotFound";
 const App = () => {
+
+  
   const router = createBrowserRouter([
     {
       path: "/",
@@ -27,6 +35,10 @@ const App = () => {
           element: <Dashboard />,
         },
       ],
+    },
+    {
+      path: "*",
+      element: <NotFound />,
     },
   ]);
 

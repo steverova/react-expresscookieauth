@@ -2,3 +2,4 @@
 /server/src/helpers/id_rsa_public.pem
 /server/node_modules
 /client/node_modules
+/node_modules
