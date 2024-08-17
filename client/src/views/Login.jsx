@@ -116,7 +116,7 @@ const Login = () => {
               onChange={handleChange}
               autoComplete="current-password"
             />
-            <CatchaWidget ref={catchaWidgetRef} onSuccess={setTurnstileToken} />
+            <CatchaWidget  ref={catchaWidgetRef} onSuccess={setTurnstileToken} />
             <Button
               disabled={!turnstileToken}
               type="submit"

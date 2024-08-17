@@ -2,7 +2,7 @@
 import { useImperativeHandle, useRef, forwardRef } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
 
-const CatchaWidget = forwardRef(({ onSuccess }, ref) => {
+const CatchaWidget = forwardRef(({ onSuccess, ...props }, ref) => {
   const widgetRef = useRef();
 
   useImperativeHandle(ref, () => ({
@@ -13,10 +13,12 @@ const CatchaWidget = forwardRef(({ onSuccess }, ref) => {
 
   return (
     <Turnstile
+      {...props}
       ref={widgetRef}
       onSuccess={onSuccess}
-      className="full-width bg-red-50"
+      onExpire={() => widgetRef.current?.reset()}
       options={{
+        refreshExpired: "manual",
         action: "submit-form",
         theme: "light",
         size: "auto",
