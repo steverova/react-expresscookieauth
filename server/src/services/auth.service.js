@@ -95,7 +95,10 @@ const AuthService = () => {
 
   const verifyTurnstileToken = async (req, res) => {
     const { turnstileToken } = req.body;
-
+    console.log({
+      secret: process.env.TURNSTILE_SECRET_KEY,
+      response: turnstileToken,
+    });
     try {
       const response = await fetch(
         "https://challenges.cloudflare.com/turnstile/v0/siteverify",
@@ -111,9 +114,14 @@ const AuthService = () => {
         }
       );
 
-      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
 
-      return res.status(200).send({ message: "VALID_TOKEN", content: data });
+      const data = await response.json();
+      console.log(data);
+
+      return res.status(200).send({ content: { ...data } });
     } catch (error) {
       console.error("Error verifying Turnstile token:", error);
       return res

@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../http/axiosInstance";
 
-
 const useAuth = () => {
   const navigate = useNavigate();
 
@@ -26,22 +25,20 @@ const useAuth = () => {
     }
   };
 
-  const protectedRoute = async () => {
-    console.log("Protected Route");
-    const response = await axiosInstance.get("/auth/protected");
-    if (response.status === 401) {
-      navigate("/unauthorized");
-    }
-    return response;
-  };
-
   const isAuthenticated = async () => {
     const response = await axiosInstance.get("/auth/protected");
-    console.log("que pasa ==>", response.data.autorized)
+    console.log("que pasa ==>", response.data.autorized);
     return response.data.autorized;
   };
 
-  return { singUp, protectedRoute, logOut, isAuthenticated };
+  const validateTurnsTileToken = async (turnstileToken) => {
+    const response = await axiosInstance.post("/auth/verify-turnstile-token", {
+      turnstileToken,
+    });
+    return response;
+  }
+
+  return { singUp, logOut, isAuthenticated, validateTurnsTileToken };
 };
 
 export default useAuth;

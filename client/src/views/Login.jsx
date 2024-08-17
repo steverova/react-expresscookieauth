@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   Box,
   Grid,
@@ -12,8 +12,9 @@ import welcome from "../assets/ilustrations/welcome.svg";
 import CatchaWidget from "../plugins/Catcha";
 
 const Login = () => {
-  const { singUp } = useAuth();
-  const [turntileToken, setTurntileToken] = useState()
+  const { singUp, validateTurnsTileToken } = useAuth();
+  const [turnstileToken, setTurnstileToken] = useState(null);
+  const catchaWidgetRef = useRef(null);
 
   const [formValues, setFormValues] = useState({
     email: "steverova0594@gmail.com",
@@ -30,6 +31,12 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const response = await validateTurnsTileToken(turnstileToken);
+    if (!response.data.content.success) {
+      setTurnstileToken(null);
+      await catchaWidgetRef?.current.resetWidget();
+      return;
+    }
     await singUp(formValues);
   };
 
@@ -38,20 +45,20 @@ const Login = () => {
       <CssBaseline />
       {/* Columna Izquierda (Imagen) */}
       <Grid
-  item
-  xs={false}
-  sm={false}
-  md={6}
-  lg={8}
-  sx={{
-    display: { xs: "none", md: "flex" },
-    height: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  }}
->
-  <img className="h-3/5" src={welcome} alt="welcomeimage" />
-</Grid>
+        item
+        xs={false}
+        sm={false}
+        md={6}
+        lg={8}
+        sx={{
+          display: { xs: "none", md: "flex" },
+          height: "100%",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <img className="h-3/5" src={welcome} alt="welcomeimage" />
+      </Grid>
 
       {/* Columna Derecha (Formulario) */}
       <Grid
@@ -84,19 +91,20 @@ const Login = () => {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit}>
             <TextField
+              disabled={!turnstileToken}
               margin="normal"
               required
               fullWidth
               id="email"
               label="Email"
               name="email"
-              
               value={formValues.email}
               onChange={handleChange}
               autoComplete="email"
               autoFocus
             />
             <TextField
+              disabled={!turnstileToken}
               margin="normal"
               required
               fullWidth
@@ -108,8 +116,9 @@ const Login = () => {
               onChange={handleChange}
               autoComplete="current-password"
             />
-            <CatchaWidget onSuccess={setTurntileToken}/>
+            <CatchaWidget ref={catchaWidgetRef} onSuccess={setTurnstileToken} />
             <Button
+              disabled={!turnstileToken}
               type="submit"
               fullWidth
               variant="contained"
@@ -118,7 +127,6 @@ const Login = () => {
             >
               Login
             </Button>
-            {/* {turntileToken} */}
           </Box>
         </Box>
       </Grid>

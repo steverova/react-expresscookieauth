@@ -11,6 +11,7 @@ const ProtectedLayout = () => {
     setIsAuth(response);
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     fetchAuth();
   }, []);
