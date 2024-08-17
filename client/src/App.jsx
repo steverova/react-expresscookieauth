@@ -8,8 +8,9 @@ import Login from "./views/Login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProtectedLayout from "./auth/ProtectedLayout";
 import Unauthorized from "./views/Unauthorized";
-import Dashboard from "./views/dashboard";
+import Dashboard from "./views/Dashboard";
 import NotFound from "./views/NotFound";
+import DataTable from "./views/DataTable";
 const App = () => {
 
   
@@ -27,12 +28,16 @@ const App = () => {
       element: <Login />,
     },
     {
-      path: "/dashboard",
+      path: "/dashboard/",
       element: <ProtectedLayout />,
       children: [
         {
           path: "",
           element: <Dashboard />,
+        },
+        {
+          path: "table",
+          element: <DataTable />,
         },
       ],
     },
