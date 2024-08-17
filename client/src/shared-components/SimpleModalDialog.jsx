@@ -14,10 +14,8 @@ export default function SimpleModalDialog({
   size = "xs",
   title = "This is a placeholder title",
   children = null,
-  submitButton = () => {},
   minHeight = 400,
 }) {
-
   return (
     <Box>
       <Dialog
@@ -46,15 +44,16 @@ export default function SimpleModalDialog({
         <DialogContent style={{ minHeight }} dividers>
           {children}
         </DialogContent>
-        <DialogActions disableSpacing>
-          <Button
-            className="text-blue hover:bg-blue-100"
-            autoFocus
-            onClick={handleClose}
-          >
-            Close
-          </Button>
-          {submitButton}
+        <DialogActions>
+          <div>
+            <Button
+              className="text-blue hover:bg-blue-100"
+              autoFocus
+              onClick={handleClose}
+            >
+              Close
+            </Button>
+          </div>
         </DialogActions>
       </Dialog>
     </Box>

@@ -18,16 +18,13 @@ const useAuth = () => {
 
   const logOut = async () => {
     const response = await axiosInstance.post("/auth/logout");
-    console.log(response.data);
     if (response.status === 200 && response.data.message === "LOGOUT_SUCCESS") {
-      console.log("redirect to login");
       navigate("/");
     }
   };
 
   const isAuthenticated = async () => {
     const response = await axiosInstance.get("/auth/protected");
-    console.log("que pasa ==>", response.data.autorized);
     return response.data.autorized;
   };
 
@@ -36,7 +33,7 @@ const useAuth = () => {
       turnstileToken,
     });
     return response;
-  }
+  };
 
   return { singUp, logOut, isAuthenticated, validateTurnsTileToken };
 };

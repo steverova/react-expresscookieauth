@@ -3,6 +3,7 @@ import App from "./App.jsx";
 import "./index.css";
 import { purple, teal } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { DialogProvider } from "./shared-components/AlertDialog/context/DialogContextProvider.jsx";
 
 const theme = createTheme({
   palette: {
@@ -16,6 +17,8 @@ const theme = createTheme({
 
 createRoot(document.getElementById("root")).render(
   <ThemeProvider theme={theme}>
-    <App />
+    <DialogProvider>
+      <App />
+    </DialogProvider>
   </ThemeProvider>
 );

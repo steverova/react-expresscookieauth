@@ -14,8 +14,6 @@ const AuthService = () => {
   const login = async (req, res) => {
     const { email, password } = req.body;
 
-    console.log({ email, password });
-
     const verify = await auth.verifyEmail(email);
 
     if (!verify.isFound) {
@@ -42,7 +40,7 @@ const AuthService = () => {
 
     return res
       .cookie("authcookie", token, {
-        maxAge: 900000,
+        maxAge: 60 * 60 * 1000,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
@@ -95,10 +93,6 @@ const AuthService = () => {
 
   const verifyTurnstileToken = async (req, res) => {
     const { turnstileToken } = req.body;
-    console.log({
-      secret: process.env.TURNSTILE_SECRET_KEY,
-      response: turnstileToken,
-    });
     try {
       const response = await fetch(
         "https://challenges.cloudflare.com/turnstile/v0/siteverify",
@@ -119,7 +113,6 @@ const AuthService = () => {
       }
 
       const data = await response.json();
-      console.log(data);
 
       return res.status(200).send({ content: { ...data } });
     } catch (error) {

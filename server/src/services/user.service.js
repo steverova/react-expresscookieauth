@@ -23,7 +23,6 @@ const UserService = () => {
     const { id } = req.params;
     
     const response = await userRepository.getById(id);
-    console.log('hey ==>', response);
     res.status(StatusCodes.OK).send(response);
   }
 

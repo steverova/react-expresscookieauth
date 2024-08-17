@@ -26,7 +26,6 @@ const UserRepository = () => {
       throw new Error("Id is required");
     }
     const res = await userCollection.findOneAsync({ _id: id });
-    console.log(res);
     return respondeHandler(res);
   };
 
