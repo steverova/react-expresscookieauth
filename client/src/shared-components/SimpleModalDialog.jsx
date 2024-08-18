@@ -18,14 +18,8 @@ export default function SimpleModalDialog({
 }) {
   return (
     <Box>
-      <Dialog
-        fullWidth
-        maxWidth={size}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-        onClose={handleClose}
-      >
-        <DialogTitle id="customized-dialog-title">{title}</DialogTitle>
+      <Dialog fullWidth maxWidth={size} open={open} onClose={handleClose}>
+        <DialogTitle>{title}</DialogTitle>
         <DialogActions sx={{ p: 0 }}>
           <IconButton
             className="text-red-900 hover:bg-red-100"

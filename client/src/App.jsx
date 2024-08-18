@@ -28,15 +28,15 @@ const App = () => {
     },
     {
       path: "/dashboard/",
-      element: <ProtectedLayout />,
+      element: (
+        <MainLayout>
+          <ProtectedLayout />
+        </MainLayout>
+      ),
       children: [
         {
           path: "",
-          element: (
-            <MainLayout>
-              <Dashboard />
-            </MainLayout>
-          ),
+          element: <Dashboard />,
         },
         {
           path: "table",

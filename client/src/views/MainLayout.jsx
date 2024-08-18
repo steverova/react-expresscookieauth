@@ -126,10 +126,10 @@ function MainLayout({ children }, props) {
         </Drawer>
       </Box>
       <Box
-        component="main"
+        className=""
         sx={{
           flexGrow: 1,
-          p: 3,
+
           width: { md: `calc(100% - ${drawerWidth}px)` },
         }}
       >
