@@ -131,7 +131,9 @@ function NavBar({ handleDrawerToggle }) {
           >
             {pages.map((page) => (
               <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">{page.name}</Typography>
+                <Box>
+                  <Typography textAlign="center">{page.name}</Typography>
+                </Box>
               </MenuItem>
             ))}
           </Menu>
@@ -160,7 +162,7 @@ function NavBar({ handleDrawerToggle }) {
             <Button
               key={page.name}
               onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: "white", display: "block" }}
+              sx={{ my: 2, display: "block" }}
             >
               {page.name}
             </Button>

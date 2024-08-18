@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import List from "@mui/material/List";
@@ -41,7 +40,6 @@ function MainLayout({ children }, props) {
   const drawer = (
     <div>
       <Toolbar />
-      <Divider />
       <List>
         {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
           <ListItem key={text} disablePadding>
@@ -54,7 +52,6 @@ function MainLayout({ children }, props) {
           </ListItem>
         ))}
       </List>
-      <Divider />
       <List>
         {["All mail", "Trash", "Spam"].map((text, index) => (
           <ListItem key={text} disablePadding>
@@ -62,7 +59,7 @@ function MainLayout({ children }, props) {
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText style={{color: "#166534"}} primary={text} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -78,10 +75,13 @@ function MainLayout({ children }, props) {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
+        PaperProps={{ style: { border: "none", boxShadow: "none",  } }}
         position="fixed"
+        color=""
         sx={{
           width: { md: `calc(100% - ${drawerWidth}px)` },
           ml: { md: `${drawerWidth}px` },
+          boxShadow: "none",
         }}
       >
         <NavBar handleDrawerToggle={handleDrawerToggle} />
@@ -107,18 +107,22 @@ function MainLayout({ children }, props) {
               boxSizing: "border-box",
               width: drawerWidth,
             },
+            border: "none",
           }}
         >
           {drawer}
         </Drawer>
         <Drawer
+          className="bg-red-200"
           variant="permanent"
+          PaperProps={{ style: { border: "none" } }}
           sx={{
             display: { sm: "none", md: "block" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
             },
+            border: "none",
           }}
           open
         >
@@ -134,17 +138,16 @@ function MainLayout({ children }, props) {
         }}
       >
         <Toolbar />
-        {children}
+        <Box className="bg-[#ecfdf5] h-full rounded-tl-[24px] m-1">
+          {children}
+        </Box>
       </Box>
     </Box>
   );
 }
 
 MainLayout.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * Remove this when copying and pasting into your project.
-   */
+
   window: PropTypes.func,
 };
 
