@@ -2,6 +2,7 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import useDisclousure from "../hooks/useDisclousure";
 import CustomDrawer from "../shared-components/CustomDrawer/CustomDrawer";
+import { Box, Paper } from "@mui/material";
 
 export default function DataTable() {
   const { handleCloseComponent, handleOpenComponent, open } = useDisclousure();
@@ -42,30 +43,35 @@ export default function DataTable() {
   ];
 
   return (
-    <div className="p-24" style={{ width: "100%" }}>
+    <div className="px-24 py-12" style={{ width: "100%" }}>
       <CustomDrawer open={open} closeHandler={handleCloseComponent}>
         drawer
       </CustomDrawer>
-      <DataGrid
-        disableColumnFilter
-        disableColumnSelector
-        disableDensitySelector
-        className="shadow"
-        rows={rows}
-        columns={columns}
-        slots={{ toolbar: GridToolbar }}
-        slotProps={{
-          toolbar: {
-            showQuickFilter: true,
-          },
-        }}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 10 },
-          },
-        }}
-        pageSizeOptions={[5, 10]}
-      />
+      <Box className="py-2 flex flex-row justify-end">
+        <Button  variant="contained">Add</Button>
+      </Box>
+      <Paper elevation={0}>
+        <DataGrid
+          disableColumnFilter
+          disableColumnSelector
+          disableDensitySelector
+          className="shadow"
+          rows={rows}
+          columns={columns}
+          slots={{ toolbar: GridToolbar }}
+          slotProps={{
+            toolbar: {
+              showQuickFilter: true,
+            },
+          }}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          pageSizeOptions={[5, 10]}
+        />
+      </Paper>
     </div>
   );
 }
