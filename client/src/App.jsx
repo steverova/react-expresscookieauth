@@ -12,15 +12,24 @@ import Dashboard from "./views/Dashboard";
 import NotFound from "./views/NotFound";
 import DataTable from "./views/DataTable";
 import MainLayout from "./views/MainLayout";
+import LoginRedirect from "./views/LoginRedirect";
 const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Login />,
+      element: (
+        <LoginRedirect>
+          <Login />
+        </LoginRedirect>
+      ),
     },
     {
       path: "/unauthorized",
-      element: <Unauthorized />,
+      element: (
+        <MainLayout>
+          <Unauthorized />
+        </MainLayout>
+      ),
     },
     {
       path: "/signup",

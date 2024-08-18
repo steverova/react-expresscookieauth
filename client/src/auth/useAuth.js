@@ -14,8 +14,6 @@ const useAuth = () => {
       password,
     });
 
-    console.log(response);
-
     if (response.status === 200) {
       setUser(response.data.content);
       navigate("/dashboard");
@@ -30,13 +28,13 @@ const useAuth = () => {
   const logOut = async () => {
     const response = await axiosInstance.post("/auth/logout");
     if (response.status === 200 && response.data.message === "LOGOUT_SUCCESS") {
+      localStorage.clear();
       navigate("/");
     }
   };
 
   const isAuthenticated = async () => {
     const response = await axiosInstance.get("/auth/protected");
-    console.log(response);
     return response.data.autorized;
   };
 

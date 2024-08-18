@@ -18,8 +18,12 @@ const authHelper = {
     return isMatch;
   },
 
-  generateToken: async ({ email = "", name = "" }, expireTime = "1h") => {
-    const token = getJWT().sign({ email, name }, process.env.SECRET_TOKEN_KEY, {
+  generateToken: async (
+    { email = "", name = "" },
+    expireTime = "1h",
+    secretKey = process.env.SECRET_TOKEN_KEY
+  ) => {
+    const token = getJWT().sign({ email, name }, secretKey, {
       expiresIn: expireTime,
     });
     return token;

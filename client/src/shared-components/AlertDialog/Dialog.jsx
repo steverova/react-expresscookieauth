@@ -19,7 +19,7 @@ export default function AlertDialogComponent({ options }) {
       fullWidth
       maxWidth='xs'
       open={isOpen}
-      PaperProps={{
+      paperprops={{
         elevation: 0,
         sx: { borderRadius: '12px' },
       }}>

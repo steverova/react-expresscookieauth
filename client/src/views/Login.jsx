@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   Box,
   Grid,
@@ -24,10 +24,6 @@ const Login = () => {
     email: "steverova0594@gmail.com",
     password: "Hello$1234",
   });
-
-  useEffect(() => {
-    console.log("payload", payload);
-  }, [payload]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

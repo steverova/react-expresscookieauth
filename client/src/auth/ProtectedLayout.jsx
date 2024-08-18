@@ -1,14 +1,16 @@
 import { Navigate, Outlet } from "react-router-dom";
 import useAuth from "./useAuth";
 import { useEffect, useState } from "react";
+import { useAuthStore } from "../store/useAuthStore";
 
 const ProtectedLayout = () => {
   const { isAuthenticated } = useAuth();
   const [isAuth, setIsAuth] = useState(null);
+  const { setLogged } = useAuthStore();
 
   const fetchAuth = async () => {
     const response = await isAuthenticated();
-    
+    setLogged(response);
     setIsAuth(response);
   };
 

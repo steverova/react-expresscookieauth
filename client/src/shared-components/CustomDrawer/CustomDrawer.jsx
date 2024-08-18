@@ -11,7 +11,7 @@ function CustomDrawer({
 }) {
   return (
     <Drawer
-      PaperProps={{
+      paperprops={{
         sx: {
           width: { sm: "100%", md: size },
           display: "flex",

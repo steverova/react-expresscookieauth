@@ -12,7 +12,7 @@ router.post("/register", validate(validation.create), service.register);
 router.post("/login", validate(validation.login), service.login);
 router.post("/logout", service.logout);
 router.post("/verify-turnstile-token", service.verifyTurnstileToken);
-router.get("/protected", authMiddleware, service.validateAuthCookies);
+router.get("/protected", authMiddleware);
 router.get("/public_key", authMiddleware, service.getPublicKey);
 
 export default router;

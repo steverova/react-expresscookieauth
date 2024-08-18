@@ -15,7 +15,7 @@ const AuthService = () => {
     const { email, password } = req.body;
 
     const verify = await auth.verifyEmail(email);
-  
+
     if (!verify.isFound) {
       return res
         .status(StatusCodes.NOT_FOUND)
@@ -33,14 +33,31 @@ const AuthService = () => {
         .send({ message: "INVALID_PASSWORD", content: [] });
     }
 
-    const token = await authHelper.generateToken({
-      email: verify.data.user.email,
-      name: verify.data.user.name,
-    });
+    const token = await authHelper.generateToken(
+      {
+        email: verify.data.user.email,
+        name: verify.data.user.name,
+      },
+      "15m"
+    );
+
+    const refreshToken = await authHelper.generateToken(
+      {
+        email: verify.data.user.email,
+        name: verify.data.user.name,
+      },
+      "7h"
+    );
 
     return res
       .cookie("authcookie", token, {
-        maxAge: 60 * 60 * 1000,
+        maxAge: 15 * 60 * 1000,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      })
+      .cookie("refreshcookie", refreshToken, {
+        maxAge: 7 * 60 * 60 * 1000,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
@@ -52,6 +69,7 @@ const AuthService = () => {
   const logout = async (_, res) => {
     return res
       .clearCookie("authcookie")
+      .clearCookie("refreshcookie")
       .status(StatusCodes.OK)
       .send({ message: "LOGOUT_SUCCESS", data: [] });
   };
@@ -87,11 +105,11 @@ const AuthService = () => {
     return res.status(StatusCodes.OK).send({ publicKey });
   };
 
-  const validateAuthCookies = async (_, res) => {
-    return res
-      .status(StatusCodes.OK)
-      .send({ message: "VALID_TOKEN", autorized: true, content: [] });
-  };
+  // const validateAuthCookies = async (_, res) => {
+  //   return res
+  //     .status(StatusCodes.OK)
+  //     .send({ message: "VALID_TOKEN", autorized: true, content: [] });
+  // };
 
   const verifyTurnstileToken = async (req, res) => {
     const { turnstileToken } = req.body;
@@ -130,7 +148,6 @@ const AuthService = () => {
     logout,
     register,
     getPublicKey,
-    validateAuthCookies,
     verifyTurnstileToken,
   };
 };

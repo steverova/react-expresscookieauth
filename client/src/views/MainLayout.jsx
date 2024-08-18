@@ -75,7 +75,7 @@ function MainLayout({ children }, props) {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
-        PaperProps={{ style: { border: "none", boxShadow: "none",  } }}
+        paperprops={{ style: { border: "none", boxShadow: "none",  } }}
         position="fixed"
         color=""
         sx={{
@@ -115,7 +115,7 @@ function MainLayout({ children }, props) {
         <Drawer
           className="bg-red-200"
           variant="permanent"
-          PaperProps={{ style: { border: "none" } }}
+          paperprops={{ style: { border: "none" } }}
           sx={{
             display: { sm: "none", md: "block" },
             "& .MuiDrawer-paper": {

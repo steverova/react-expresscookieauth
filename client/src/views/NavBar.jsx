@@ -21,6 +21,7 @@ import {
 } from "./../plugins/icons";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../store/useUserStore";
+import { useAuthStore } from "../store/useAuthStore";
 
 // const pages = ["Products", "Pricing", "Blog"];
 
@@ -28,6 +29,7 @@ function NavBar({ handleDrawerToggle }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { user } = useUserStore();
+  const { isLogged } = useAuthStore()
 
   const { logOut } = useAuth();
   const navigate = useNavigate();
@@ -46,14 +48,19 @@ function NavBar({ handleDrawerToggle }) {
 
   const pages = [
     {
-      name: "Products",
-      route: "/products",
-      callback: () => console.log("Profile"),
+      name: "Dshboard",
+      route: "/dashboard",
+      callback: () => navigate("/dashboard"),
     },
     {
-      name: "Users",
-      route: "/users",
-      callback: () => console.log("Profile"),
+      name: "Table",
+      route: "/table",
+      callback: () => navigate("/dashboard/table"),
+    },
+    {
+      name: "SignUP",
+      route: "/",
+      callback: () => navigate("/"),
     },
   ];
 
@@ -130,7 +137,7 @@ function NavBar({ handleDrawerToggle }) {
             }}
           >
             {pages.map((page) => (
-              <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+              <MenuItem key={page.name} onClick={() => page.callback()}>
                 <Box>
                   <Typography textAlign="center">{page.name}</Typography>
                 </Box>
@@ -161,7 +168,7 @@ function NavBar({ handleDrawerToggle }) {
           {pages.map((page) => (
             <Button
               key={page.name}
-              onClick={handleCloseNavMenu}
+              onClick={() => page.callback()}
               sx={{ my: 2, display: "block" }}
             >
               {page.name}
@@ -173,6 +180,7 @@ function NavBar({ handleDrawerToggle }) {
           className="flex flex-row items-center gap-x-3"
           sx={{ flexGrow: 0 }}
         >
+          <Typography>{isLogged && "logged"}</Typography>
           <Typography>{`${user.name} ${user.lastname}`}</Typography>
           <Tooltip title="Open settings">
             <IconButton
