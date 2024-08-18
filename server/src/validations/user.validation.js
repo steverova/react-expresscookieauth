@@ -2,6 +2,8 @@ import * as yup from "yup"
 
 const userValidation = () => {
 	const create = yup.object().shape({
+		avatar: yup.string().url("Must be a valid URL"),
+		active: yup.boolean(),
 		name: yup
 			.string()
 			.matches(

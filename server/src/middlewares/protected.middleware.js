@@ -4,6 +4,12 @@ import { getJWT } from "../plugins/plugins.js";
 const authMiddleware = async (req, res, next) => {
   const token = req.cookies.authcookie;
 
+  console.log("token =>", token)
+
+  const decode = getJWT().decode(token); 
+
+  console.log("decode =>", decode)
+
   if (!token) {
     return res
       .status(StatusCodes.UNAUTHORIZED)

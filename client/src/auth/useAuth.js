@@ -1,8 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../http/axiosInstance";
+import { useLoginNotificationsStore } from "../store/useLoginNotificationsStore";
+import { useUserStore } from "../store/useUserStore";
 
 const useAuth = () => {
   const navigate = useNavigate();
+  const { notify } = useLoginNotificationsStore();
+  const { setUser } = useUserStore();
 
   const singUp = async ({ email, password }) => {
     const response = await axiosInstance.post("/auth/login", {
@@ -10,8 +14,15 @@ const useAuth = () => {
       password,
     });
 
+    console.log(response);
+
     if (response.status === 200) {
+      setUser(response.data.content);
       navigate("/dashboard");
+    }
+
+    if (response.status === 404) {
+      notify("Usuario no encontrado", true, 404);
     }
     return response;
   };

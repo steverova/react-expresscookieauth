@@ -20,6 +20,7 @@ import {
   SettingsIcon,
 } from "./../plugins/icons";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../store/useUserStore";
 
 const pages = ["Products", "Pricing", "Blog"];
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -27,6 +28,7 @@ const pages = ["Products", "Pricing", "Blog"];
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { user } = useUserStore();
 
   const { logOut } = useAuth();
   const navigate = useNavigate();
@@ -157,13 +159,21 @@ function NavBar() {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box
+            className="flex flex-row items-center gap-x-3"
+            sx={{ flexGrow: 0 }}
+          >
+            <Typography>{`${user.name} ${user.lastname}`}</Typography>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <IconButton
+                className="shadow-lg"
+                onClick={handleOpenUserMenu}
+                sx={{ p: 0 }}
+              >
                 <Avatar
                   component={Paper}
-                  alt="Remy Sharp"
-                  src="https://raw.githubusercontent.com/steverova/assets/main/LEGO_AVATAR/american_football_player.svg"
+                  alt={`${user.name} ${user.lastname} avatar`}
+                  src={user.avatar}
                 />
               </IconButton>
             </Tooltip>

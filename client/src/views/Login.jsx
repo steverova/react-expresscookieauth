@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Box,
   Grid,
@@ -6,20 +6,28 @@ import {
   TextField,
   Button,
   CssBaseline,
+  Alert,
+  Collapse,
 } from "@mui/material";
 import useAuth from "../auth/useAuth";
 import welcome from "../assets/ilustrations/welcome.svg";
 import CatchaWidget from "../plugins/Catcha";
+import { useLoginNotificationsStore } from "../store/useLoginNotificationsStore";
 
 const Login = () => {
   const { singUp, validateTurnsTileToken } = useAuth();
   const [turnstileToken, setTurnstileToken] = useState(null);
   const catchaWidgetRef = useRef(null);
+  const { payload, notify} = useLoginNotificationsStore();
 
   const [formValues, setFormValues] = useState({
     email: "steverova0594@gmail.com",
     password: "Hello$1234",
   });
+
+  useEffect(() => {
+    console.log("payload", payload);
+  }, [payload]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -116,7 +124,7 @@ const Login = () => {
               onChange={handleChange}
               autoComplete="current-password"
             />
-            <CatchaWidget  ref={catchaWidgetRef} onSuccess={setTurnstileToken} />
+            <CatchaWidget ref={catchaWidgetRef} onSuccess={setTurnstileToken} />
             <Button
               disabled={!turnstileToken}
               type="submit"
@@ -128,6 +136,12 @@ const Login = () => {
               Login
             </Button>
           </Box>
+
+          <Collapse in={payload.show && payload.type === 404}>
+            <Alert onClose={() => notify("", false, null)} className="my-6" variant="filled" severity="error">
+              {payload.message}
+            </Alert>
+          </Collapse>
         </Box>
       </Grid>
     </Grid>

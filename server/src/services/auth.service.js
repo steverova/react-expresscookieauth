@@ -15,7 +15,7 @@ const AuthService = () => {
     const { email, password } = req.body;
 
     const verify = await auth.verifyEmail(email);
-
+  
     if (!verify.isFound) {
       return res
         .status(StatusCodes.NOT_FOUND)
@@ -30,12 +30,12 @@ const AuthService = () => {
     if (!isPasswordValid) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .send({ message: "INVALID_PASSWORD", data: [] });
+        .send({ message: "INVALID_PASSWORD", content: [] });
     }
 
     const token = await authHelper.generateToken({
-      email: verify.data.email,
-      name: verify.data.name,
+      email: verify.data.user.email,
+      name: verify.data.user.name,
     });
 
     return res
@@ -46,7 +46,7 @@ const AuthService = () => {
         sameSite: "strict",
       })
       .status(StatusCodes.OK)
-      .send({ message: "LOGIN_SUCCESS", data: verify.data.user });
+      .send({ message: "LOGIN_SUCCESS", content: verify.data.user });
   };
 
   const logout = async (_, res) => {
@@ -57,7 +57,7 @@ const AuthService = () => {
   };
 
   const register = async (req, res) => {
-    const { name, lastname, email, password } = req.body;
+    const { name, lastname, email, password, avatar, active } = req.body;
 
     const verifyResponse = await auth.verifyEmail(email);
 
@@ -72,6 +72,8 @@ const AuthService = () => {
       lastname,
       email,
       password,
+      avatar,
+      active,
     });
 
     return res
