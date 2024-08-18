@@ -11,9 +11,8 @@ import Unauthorized from "./views/Unauthorized";
 import Dashboard from "./views/Dashboard";
 import NotFound from "./views/NotFound";
 import DataTable from "./views/DataTable";
+import MainLayout from "./views/MainLayout";
 const App = () => {
-
-  
   const router = createBrowserRouter([
     {
       path: "/",
@@ -33,7 +32,11 @@ const App = () => {
       children: [
         {
           path: "",
-          element: <Dashboard />,
+          element: (
+            <MainLayout>
+              <Dashboard />
+            </MainLayout>
+          ),
         },
         {
           path: "table",

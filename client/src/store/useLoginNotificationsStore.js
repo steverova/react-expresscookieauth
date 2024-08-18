@@ -1,11 +1,13 @@
 import { create } from "zustand";
 
+const initialState = {
+  show: false,
+  type: 200,
+  message: "",
+};
+
 export const useLoginNotificationsStore = create((set) => ({
-  payload: {
-    show: false,
-    type: 200,
-    message: "",
-  },
+  payload: initialState,
 
   notify: (message, show = false, type = 200) => {
     set(() => ({
@@ -14,6 +16,12 @@ export const useLoginNotificationsStore = create((set) => ({
         type,
         message,
       },
+    }));
+  },
+
+  clear: () => {
+    set(() => ({
+      payload: initialState,
     }));
   },
 }));

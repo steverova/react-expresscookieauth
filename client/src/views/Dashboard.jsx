@@ -2,7 +2,6 @@ import { Button } from "@mui/material";
 import dashboard from "../assets/ilustrations/dashboard.svg";
 import useDisclousure from "../hooks/useDisclousure";
 import SimpleModalDialog from "../shared-components/SimpleModalDialog";
-import NavBar from "./NavBar";
 import useAlertDialog from "../shared-components/AlertDialog/useAlertDialog";
 
 function Dashboard() {
@@ -17,9 +16,7 @@ function Dashboard() {
   };
 
   return (
-    <div className="relative h-screen w-screen">
-      <NavBar />
-
+    <div className=" h-full w-ful">
       <div className="flex flex-row justify-center p-12 h-4/6">
         <img src={dashboard} alt="Unauthorized" />
       </div>
