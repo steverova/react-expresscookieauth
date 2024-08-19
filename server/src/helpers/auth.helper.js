@@ -29,42 +29,27 @@ const authHelper = {
     return token;
   },
 
-  authenticateToken(req, res) {
-    const authCookie = req.cookies.authcookie;
-    if (authCookie == null) return res.sendStatus(401);
-    jwt.verify(authCookie, process.env.SECRET_TOKEN_KEY, (err, user) => {
-      if (err) return res.sendStatus(403);
-      req.user = user;
-      next();
-    });
-  },
-
   generateKeyPair() {
     const publicKeyPath = `${__dirname}/id_rsa_public.pem`;
     const privateKeyPath = `${__dirname}/id_rsa_private.pem`;
 
-    // Verificar si los archivos ya existen
     if (!fs.existsSync(publicKeyPath) && !fs.existsSync(privateKeyPath)) {
-      // Generar el par de claves
       const keyPair = crypto.generateKeyPairSync("rsa", {
-        modulusLength: 4096, // bits - estándar para claves RSA
+        modulusLength: 4096, 
         publicKeyEncoding: {
-          type: "pkcs1", // "Public Key Cryptography Standards 1"
-          format: "pem", // Formato más común
+          type: "pkcs1", 
+          format: "pem",
         },
         privateKeyEncoding: {
-          type: "pkcs1", // "Public Key Cryptography Standards 1"
-          format: "pem", // Formato más común
+          type: "pkcs1", 
+          format: "pem", 
         },
       });
 
-      // Crear el archivo de clave pública
       fs.writeFileSync(publicKeyPath, keyPair.publicKey);
 
-      // Crear el archivo de clave privada
       fs.writeFileSync(privateKeyPath, keyPair.privateKey);
 
-      // Establecer permisos de solo lectura
       fs.chmodSync(publicKeyPath, 0o444);
       fs.chmodSync(privateKeyPath, 0o400);
 

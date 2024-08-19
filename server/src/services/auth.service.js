@@ -5,63 +5,65 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 import authHelper from "../helpers/auth.helper.js"
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
+import asyncHandler from "express-async-handler"
 
 const srcDir = join(__dirname, "..")
+const COOKIE_TIME_OUT = 15 * 60 * 1000
+const REFRESH_COOKIE_TIME_OUT = 7 * 60 * 60 * 1000
+
+const cookieOptions = (maxAge) => ({
+	httpOnly: true,
+	secure: process.env.NODE_ENV === "production",
+	sameSite: "Strict",
+	maxAge,
+})
 
 const AuthService = () => {
 	const auth = AuthRepository()
 
-	const login = async (req, res) => {
+	const login = asyncHandler(async (req, res) => {
 		const { email, password } = req.body
 
-		const verify = await auth.verifyEmail(email)
+		const emailExistRes = await auth.emailExist(email)
 
-		if (!verify.isFound) {
+		if (!emailExistRes.isFound)
 			return res
 				.status(StatusCodes.NOT_FOUND)
-				.send({ message: "USER_NOT_FOUND", data: [] })
-		}
+				.send({ message: "USER_NOT_FOUND", content: [] })
 
 		const isPasswordValid = await authHelper.comparePassword(
 			password,
-			verify.data.auth.password,
+			emailExistRes.content.auth.password,
 		)
 
-		if (!isPasswordValid) {
+		if (!isPasswordValid)
 			return res
 				.status(StatusCodes.UNAUTHORIZED)
 				.send({ message: "INVALID_PASSWORD", content: [] })
+
+		const tokenPayload = {
+			email: emailExistRes.content.user.email,
+			name: emailExistRes.content.user.name,
 		}
 
-		const token = await authHelper.generateToken(
-			{ email: verify.data.user.email, name: verify.data.user.name },
-			"15m",
-		)
+		const token = await authHelper.generateToken(tokenPayload, "15m")
 
 		const refreshToken = await authHelper.generateToken(
-			{
-				email: verify.data.user.email,
-				name: verify.data.user.name,
-			},
+			tokenPayload,
 			"7h",
+			process.env.REFRESH_TOKEN_KEY,
 		)
 
 		return res
-			.cookie("authcookie", token, {
-				maxAge: 15 * 60 * 1000,
-				httpOnly: true,
-				secure: process.env.NODE_ENV === "production",
-				sameSite: "strict",
-			})
-			.cookie("refreshcookie", refreshToken, {
-				maxAge: 7 * 60 * 60 * 1000,
-				httpOnly: true,
-				secure: process.env.NODE_ENV === "production",
-				sameSite: "strict",
-			})
+			.cookie("authcookie", token, cookieOptions(COOKIE_TIME_OUT))
+			.cookie(
+				"refreshcookie",
+				refreshToken,
+				cookieOptions(REFRESH_COOKIE_TIME_OUT),
+			)
 			.status(StatusCodes.OK)
-			.send({ message: "LOGIN_SUCCESS", content: verify.data.user })
-	}
+			.send({ message: "LOGIN_SUCCESS", content: emailExistRes.content.user })
+	})
 
 	const logout = async (_, res) => {
 		return res

@@ -48,14 +48,14 @@ const AuthRepository = () => {
 
   const changePassword = () => {};
 
-  const verifyEmail = async (email) => {
+  const emailExist = async (email) => {
     const user = await userCollection.findOneAsync({ email });
     const auth = await authCollection.findOneAsync({ email });
 
     if (!user || !auth) {
-      return { message: "NOT_FOUND", isFound: false, data: auth };
+      return { message: "NOT_FOUND", isFound: false, content: auth };
     }
-    return { message: "FOUND", isFound: true, data: { auth, user } };
+    return { message: "FOUND", isFound: true, content: { auth, user } };
   };
 
   const resendEmailVerification = () => {};
@@ -67,7 +67,7 @@ const AuthRepository = () => {
     forgotPassword,
     resetPassword,
     changePassword,
-    verifyEmail,
+    emailExist,
     resendEmailVerification,
   };
 };
