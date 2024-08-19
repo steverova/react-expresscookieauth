@@ -3,14 +3,8 @@
 	"organizeImports": {
 		"enabled": true
 	},
-	"vcs": {
-		"enabled": true,
-		"clientKind": "git",
-		"useIgnoreFile": true
-	},
 	"linter": {
 		"enabled": true,
-
 		"ignore": [
 			"package.json",
 			"package-lock.json",
@@ -26,34 +20,6 @@
 
 		"rules": {
 			"recommended": true,
-			"complexity": {
-				"noUselessLoneBlockStatements": {
-					"level": "warn"
-				}
-			},
-			"suspicious": {
-				"useValidTypeof": {
-					"level": "warn"
-				},
-				"noRedeclare": {
-					"level": "warn"
-				},
-				"noEmptyBlockStatements": {
-					"level": "warn"
-				} 
-			},
-			"nursery": {
-				"noEmptyBlock": {
-					"level": "warn"
-				},
-				"noUnusedFunctionParameters": {
-					"level": "warn",
-					"fix": "none"
-				},
-				"noUselessStringConcat": {
-					"level": "warn"
-				}
-			},
 			"correctness": {
 				"noUndeclaredVariables": {
 					"level": "error"
@@ -61,9 +27,6 @@
 				"noUnusedVariables": {
 					"level": "error",
 					"fix": "none"
-				},
-				"noSelfAssign": {
-					"level": "warn"
 				}
 			},
 			"style": {
@@ -74,9 +37,6 @@
 				"useTemplate": {
 					"level": "warn",
 					"fix": "safe"
-				},
-				"noArguments": {
-					"level": "warn"
 				}
 			}
 		}
@@ -105,7 +65,6 @@
 	"javascript": {
 		"formatter": {
 			"arrowParentheses": "always",
-			"quoteStyle": "single",
 			"bracketSameLine": true,
 			"bracketSpacing": true,
 			"jsxQuoteStyle": "double",
