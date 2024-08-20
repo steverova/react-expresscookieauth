@@ -10,6 +10,7 @@ const ProtectedLayout = () => {
 
   const fetchAuth = async () => {
     const response = await isAuthenticated();
+    console.log(response);
     setLogged(response);
     setIsAuth(response);
   };

@@ -2,33 +2,79 @@ import { StatusCodes } from "http-status-codes"
 import { getJWT } from "../plugins/plugins.js"
 import authHelper from "../helpers/auth.helper.js"
 
+// const authMiddleware = async (req, res) => {
+
+// 	const token = req.cookies.authcookie
+// 	const refreshToken = req.cookies.refreshcookie
+
+// 	console.log("token ==>", token)
+// 	console.log("refreshToken ==>", refreshToken)
+
+// 	if (!token && !refreshToken) {
+// 		return res
+// 			.status(StatusCodes.UNAUTHORIZED)
+// 			.send({ message: "NO_TOKENS_PROVIDED", autorized: false, content: [] })
+// 	}
+
+// 	if (!token) {
+// 		await generateNewToken(req, res)
+// 		return
+// 	}
+
+// 	const jwtResponse = getJWT().verify(token, process.env.SECRET_TOKEN_KEY)
+
+// 	console.log("jwtResponse ==>", jwtResponse)
+
+// 	if (!jwtResponse) {
+// 		return res
+// 			.status(StatusCodes.UNAUTHORIZED)
+// 			.send({ message: "INVALID_TOKEN", content: [] })
+// 	}
+
+// 	return res
+// 		.status(StatusCodes.OK)
+// 		.send({ message: "VALID_TOKEN", autorized: true, content: [] })
+// }
+
 const authMiddleware = async (req, res) => {
+    const token = req.cookies.authcookie;
+    const refreshToken = req.cookies.refreshcookie;
 
-	const token = req.cookies.authcookie
-	const refreshToken = req.cookies.refreshcookie
-	if (!token && !refreshToken) {
-		return res
-			.status(StatusCodes.UNAUTHORIZED)
-			.send({ message: "NO_TOKENS_PROVIDED", autorized: false, content: [] })
-	}
+    console.log("Received request with cookies:");
+    console.log("authcookie:", token);
+    console.log("refreshcookie:", refreshToken);
 
-	if (!token) {
-		await generateNewToken(req, res)
-		return
-	}
+    if (!token && !refreshToken) {
+        console.log("No tokens provided.");
+        return res
+            .status(StatusCodes.UNAUTHORIZED)
+            .send({ message: "NO_TOKENS_PROVIDED", authorized: false, content: [] });
+    }
 
-	const jwtResponse = getJWT().verify(token, process.env.SECRET_TOKEN_KEY)
+    if (!token) {
+        console.log("No authcookie provided, attempting to generate a new token using refresh token.");
+        await generateNewToken(req, res);
+        return;
+    }
 
-	if (!jwtResponse) {
-		return res
-			.status(StatusCodes.UNAUTHORIZED)
-			.send({ message: "INVALID_TOKEN", content: [] })
-	}
+    console.log("Verifying authcookie with secret key.");
+    const jwtResponse = getJWT().verify(token, process.env.SECRET_TOKEN_KEY);
 
-	return res
-		.status(StatusCodes.OK)
-		.send({ message: "VALID_TOKEN", autorized: true, content: [] })
-}
+    console.log("JWT verification response:", jwtResponse);
+
+    if (!jwtResponse) {
+        console.log("Invalid authcookie.");
+        return res
+            .status(StatusCodes.UNAUTHORIZED)
+            .send({ message: "INVALID_TOKEN", content: [] });
+    }
+
+    console.log("Valid authcookie. User is authorized.");
+    return res
+        .status(StatusCodes.OK)
+        .send({ message: "VALID_TOKEN", authorized: true, content: [] });
+};
+
 
 const generateNewToken = async (req, res) => {
 	const refreshToken = req.cookies.refreshcookie
@@ -57,7 +103,7 @@ const generateNewToken = async (req, res) => {
 			email: decode.email,
 			name: decode.name,
 		},
-		process.env.COOKIE_EXPIRE_TOKEN_TIME,
+		"15m",
 	)
 
 	return res
@@ -68,7 +114,7 @@ const generateNewToken = async (req, res) => {
 			sameSite: "strict",
 		})
 		.status(StatusCodes.OK)
-		.send({ message: "VALID_TOKEN", autorized: true, content: [] })
+		.send({ message: "VALID_TOKEN", authorized: true, content: [] })
 }
 
 export default authMiddleware
