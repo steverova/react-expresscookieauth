@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useNavigate } from "react-router-dom";
 import useAuth from "../auth/useAuth";
 import { useEffect, useState } from "react";
@@ -12,6 +11,7 @@ const LoginRedirect = ({ children }) => {
 
   console.log("isLogged", isLogged);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const fetchAuth = async () => {
       if (isLogged)

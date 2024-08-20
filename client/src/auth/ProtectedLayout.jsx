@@ -1,30 +1,29 @@
-import { Navigate, Outlet } from "react-router-dom";
-import useAuth from "./useAuth";
-import { useEffect, useState } from "react";
-import { useAuthStore } from "../store/useAuthStore";
+import { Navigate } from "react-router-dom"
+import useAuth from "./useAuth"
+import { useEffect, useState } from "react"
+import { useAuthStore } from "../store/useAuthStore"
 
-const ProtectedLayout = () => {
-  const { isAuthenticated } = useAuth();
-  const [isAuth, setIsAuth] = useState(null);
-  const { setLogged } = useAuthStore();
+const ProtectedLayout = ({ children }) => {
+	const { isAuthenticated } = useAuth()
+	const [isAuth, setIsAuth] = useState(null)
+	const { setLogged } = useAuthStore()
 
-  const fetchAuth = async () => {
-    const response = await isAuthenticated();
-    console.log(response);
-    setLogged(response);
-    setIsAuth(response);
-  };
+	const fetchAuth = async () => {
+		const response = await isAuthenticated()
+		setLogged(response)
+		setIsAuth(response)
+	}
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    fetchAuth();
-  }, []);
-  
-  if (isAuth === null) {
-    return <div>Loading...</div>;
-  }
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		fetchAuth()
+	}, [])
 
-  return isAuth ? <Outlet /> : <Navigate to="/signup" />;
-};
+	if (isAuth === null) {
+		return <div>Loading...</div>
+	}
 
-export default ProtectedLayout;
+	return isAuth ? children : <Navigate to="/signup" />
+}
+
+export default ProtectedLayout

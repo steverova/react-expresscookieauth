@@ -35,7 +35,6 @@ const useAuth = () => {
 
 	const isAuthenticated = async () => {
 		const response = await axiosInstance.get("/auth/protected")
-		console.log("isAuthenticated ==>", response)
 		return response.data.authorized
 	}
 

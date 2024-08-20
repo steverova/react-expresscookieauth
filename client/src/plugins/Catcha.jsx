@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+
 import { useImperativeHandle, useRef, forwardRef } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
 

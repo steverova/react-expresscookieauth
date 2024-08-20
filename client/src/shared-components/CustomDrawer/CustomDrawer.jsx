@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Box, Container, Drawer, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
