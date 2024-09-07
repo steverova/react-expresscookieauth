@@ -1,14 +1,23 @@
-
-
-#root {
-  margin: 0 auto;
-  text-align: center;
+/* Firefox */
+html {
+  scrollbar-width: thin; /* Ancho de la barra de desplazamiento */
+  scrollbar-color: grey transparent; /* Color del pulgar y del track */
 }
 
-.chakra-button {
-  border-radius: 18px !important;
+/* Webkit */
+::-webkit-scrollbar {
+  width: 12px; /* Ancho de la barra de desplazamiento */
+  height: 12px; /* Altura de la barra de desplazamiento (para scroll horizontal) */
 }
 
-.chakra-input {
-  border-radius: 18px !important;
+::-webkit-scrollbar-track {
+  background-color: transparent; /* Color de fondo del track */
+  border-radius: 12px; /* Radio de borde del track (debe ser igual o mayor al ancho de la barra) */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: grey; /* Color del pulgar */
+  border-radius: 12px; /* Radio de borde del pulgar (debe ser igual o mayor al ancho de la barra) */
+  /* Si deseas aplicar una imagen de fondo al pulgar, puedes hacerlo aquí */
+  background-image: none;
 }
