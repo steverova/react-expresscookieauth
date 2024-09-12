@@ -6,7 +6,6 @@ import {
 	PaginationNext,
 	PaginationPrevious,
 } from '@/components/ui/pagination'
-import generateId from '@/plugins'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -43,14 +42,14 @@ export function TablePagination({ pages, ...props }) {
 					<PaginationPrevious />
 				</PaginationItem>
 
-				{Array.from({ length: pages }).map((_, index) => (
+				{Array.from({ length: pages }).map((page, index) => (
 					<PaginationItem
 						className='cursor-pointer'
 						onClick={() => {
 							setIsActive(index + 1)
 							navigate(`${path}?page=${index + 1}`)
 						}}
-						key={generateId + 1}>
+						key={page}>
 						<PaginationLink isActive={isActive === index + 1}>
 							{index + 1}
 						</PaginationLink>
