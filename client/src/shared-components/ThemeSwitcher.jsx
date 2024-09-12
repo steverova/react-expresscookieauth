@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Moon, Sun } from 'lucide-react'
 
 const ThemeSwitcher = ({ type = 'global' }) => {
-	const { setTheme, theme } = useTheme()
+	const { setTheme, theme } = useTheme('dark')
 
 	const changeTheme = () => {
 		setTheme(theme === 'dark' ? 'light' : 'dark')
