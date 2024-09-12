@@ -40,6 +40,24 @@ const navLinks = [
 				url: '/page/components/table',
 				role: 'admin',
 			},
+			{
+				title: 'Dialog',
+				icon: <Table />,
+				url: '/page/components/dialog',
+				role: 'admin',
+			},
+			{
+				title: 'Alert',
+				icon: <Table />,
+				url: '/page/components/alert',
+				role: 'admin',
+			},
+			{
+				title: 'File Chooser',
+				icon: <Table />,
+				url: '/page/components/file-chooser',
+				role: 'admin',
+			},
 		],
 	},
 ]

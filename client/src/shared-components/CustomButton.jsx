@@ -21,8 +21,9 @@ const CustomButton = ({
 	loading = false,
 	startIcon = null,
 	endIcon = null,
-	iconSize = '4',
+	iconSize = '5',
 	fullWidth = false,
+	children,
 	...props
 }) => {
 	const sizeClass = `h-${iconSize} w-${iconSize}`
@@ -41,6 +42,7 @@ const CustomButton = ({
 				{props.variant !== 'icon' && text}
 				{endIcon &&
 					React.cloneElement(endIcon, { className: `ms-2 ${sizeClass}` })}
+				{children}
 			</Button>
 		</div>
 	)

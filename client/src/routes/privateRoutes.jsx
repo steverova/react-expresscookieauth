@@ -3,6 +3,7 @@ import { Layout1 } from '@/components/Layout1/Layout1'
 import ProtectedLayout from '@/components/ProtectedLayout'
 
 import { BasicDatatable } from '@/shared-components/CustomDataTable/BasicDatatable'
+import FileChooser from '@/shared-components/FileChooser/FileChooser'
 import { Navigate } from 'react-router-dom'
 
 const privateRoutes = [
@@ -16,7 +17,7 @@ const privateRoutes = [
 		children: [
 			{
 				index: true,
-				element: <Navigate to='dashboard' replace />,
+				element: <Navigate to="dashboard" replace />,
 			},
 			{
 				path: 'dashboard',
@@ -33,17 +34,37 @@ const privateRoutes = [
 						path: 'table',
 						element: <BasicDatatable />,
 					},
-				],
-			},
-			{
-				path: 'components',
-				children: [
 					{
 						path: 'table/:page',
 						element: <BasicDatatable />,
 					},
+					{
+						path: 'dialog',
+						element: <div>dialogs</div>,
+					},
+					{
+						path: 'alert',
+						element: <div>Alert</div>,
+					},
+					{
+						path: 'file-chooser',
+						element: (
+							<div className='py-12 flex flex-row justify-center'>
+								<FileChooser />
+							</div>
+						),
+					},
 				],
 			},
+			// {
+			// 	path: 'components',
+			// 	children: [
+			// 		{
+			// 			path: 'table/:page',
+			// 			element: <BasicDatatable />,
+			// 		},
+			// 	],
+			// },
 		],
 	},
 ]
