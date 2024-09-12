@@ -9,35 +9,19 @@ const ProtectedLayout = ({ children }) => {
 	const { setAuthenticated, isAuthenticated: isUserAuth } = useUserStore()
 
 	const fetchAuth = async () => {
-		const response = await isAuthenticated();
-		console.log('response ==> ', response);
-		setAuthenticated(response);
+		const response = await isAuthenticated()
+		setAuthenticated(response)
 	}
-
-	// const fetchAuth = async () => {
-	// 	try {
-	// 		const response = await isAuthenticated()
-	// 		setAuthenticated(response)
-	// 	} catch (error) {
-	// 		const errorCode = error.response.status
-	// 		if(errorCode === 401) {
-	// 			setAuthenticated(false)
-	// 		}
-	// 	}
-	// }
 
 	useEffect(() => {
 		fetchAuth()
 	}, [])
 
-	console.log('isUserAuth ==> ', isUserAuth)
-
-	if (isUserAuth === null || undefined) {
+	if (isUserAuth === null || isUserAuth === undefined) {
 		return <ScreenLoader />
 	}
-
 	if (isUserAuth === false) {
-		return <Navigate to='/' replace />
+		return <Navigate to="/" />
 	}
 
 	return children ? children : <Outlet />

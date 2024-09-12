@@ -10,8 +10,14 @@ import { AlertCollapsible } from '@/shared-components/AlertComponenent'
 import { CustomInput } from '@/components/ui/customInput'
 import { Eye, EyeOff } from 'lucide-react'
 import CustomButton from '@/shared-components/CustomButton'
+import { useUserStore } from '@/store/useUserStore'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import ROUTES from '@/routes/routes'
 
 export default function SignIn() {
+	const { isAuthenticated } = useUserStore()
+	const navigate = useNavigate()
 	const { singUp, validateTurnsTileToken } = useAuth()
 	const [loading, setLoading] = useState(false)
 	const [showPassword, setShowPassword] = useState(false)
@@ -53,35 +59,43 @@ export default function SignIn() {
 		}
 	}
 
+	console.log('isAuthenticated ==>', isAuthenticated)
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			navigate(ROUTES.DASHBOARD)
+		}
+	}, [])
+
 	return (
-		<div className='w-full h-screen lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]'>
-			<div className=' h-screen flex items-center justify-center py-12'>
-				<div className='mx-auto grid w-[350px] gap-6'>
-					<div className='grid gap-2 text-center'>
-						<h1 className='text-3xl font-bold'>Login</h1>
-						<p className='text-balance text-muted-foreground'>
+		<div className="w-full h-screen lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
+			<div className=" h-screen flex items-center justify-center py-12">
+				<div className="mx-auto grid w-[350px] gap-6">
+					<div className="grid gap-2 text-center">
+						<h1 className="text-3xl font-bold">Login</h1>
+						<p className="text-balance text-muted-foreground">
 							Enter your email below to login to your account
 						</p>
 					</div>
-					<div className='grid gap-4'>
-						<div className='grid gap-2'>
-							<Label htmlFor='email'>Email</Label>
+					<div className="grid gap-4">
+						<div className="grid gap-2">
+							<Label htmlFor="email">Email</Label>
 							<Input
 								disabled={!turnstileToken}
-								id='email'
-								label='Email'
-								name='email'
+								id="email"
+								label="Email"
+								name="email"
 								value={formValues.email}
 								onChange={handleChange}
-								autoComplete='email'
+								autoComplete="email"
 								autoFocus
-								placeholder='m@example.com'
+								placeholder="m@example.com"
 								required
 							/>
 						</div>
-						<div className='grid gap-2'>
-							<div className='flex items-center'>
-								<Label htmlFor='password'>Password</Label>
+						<div className="grid gap-2">
+							<div className="flex items-center">
+								<Label htmlFor="password">Password</Label>
 								{/* <Link
                   href="/forgot-password"
                   className="ml-auto inline-block text-sm underline"
@@ -93,33 +107,33 @@ export default function SignIn() {
 								endAdorn={
 									<button
 										onClick={() => setShowPassword(!showPassword)}
-										type='button'>
+										type="button">
 										{!showPassword ? (
-											<Eye size={18} className='text-muted-foreground' />
+											<Eye size={18} className="text-muted-foreground" />
 										) : (
-											<EyeOff size={18} className='text-muted-foreground' />
+											<EyeOff size={18} className="text-muted-foreground" />
 										)}
 									</button>
 								}
 								disabled={!turnstileToken}
-								name='password'
-								label='Password'
+								name="password"
+								label="Password"
 								type={showPassword ? 'text' : 'password'}
-								id='password'
+								id="password"
 								value={formValues.password}
 								onChange={handleChange}
-								autoComplete='current-password'
+								autoComplete="current-password"
 								required
 							/>
 						</div>
 						<CatchaWidget ref={catchaWidgetRef} onSuccess={setTurnstileToken} />
 						<CustomButton
-							text='Login'
+							text="Login"
 							loading={loading}
 							onClick={handleSubmit}
 							disabled={!turnstileToken}
-							type='submit'
-							className='w-full'
+							type="submit"
+							className="w-full"
 						/>
 
 						<AlertCollapsible
@@ -128,11 +142,11 @@ export default function SignIn() {
 							handleClose={clear}
 						/>
 
-						<Button variant='outline' className='w-full'>
+						<Button variant="outline" className="w-full">
 							Login with Google
 						</Button>
 					</div>
-					<div className='mt-4 text-center text-sm'>
+					<div className="mt-4 text-center text-sm">
 						Don&apos;t have an account?{' '}
 						{/* <Link href="#" className="underline">
               Sign up
@@ -140,11 +154,11 @@ export default function SignIn() {
 					</div>
 				</div>
 			</div>
-			<div className='hidden bg-muted lg:flex justify-center items-center h-full'>
+			<div className="hidden bg-muted lg:flex justify-center items-center h-full">
 				<img
 					src={loginImage}
-					alt='Image-placeholder'
-					className='h-2/3 w-2/3 dark:brightness-[0.2] dark:grayscale'
+					alt="Image-placeholder"
+					className="h-2/3 w-2/3 dark:brightness-[0.2] dark:grayscale"
 				/>
 			</div>
 		</div>
