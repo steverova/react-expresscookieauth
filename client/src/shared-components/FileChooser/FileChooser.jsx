@@ -57,8 +57,10 @@ export default function FileChooser({
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
 	useEffect(() => {
-		onGetFiles(files)
-	}, [files])
+		if (typeof onGetFiles === 'function') {
+			onGetFiles(files)
+		}
+	}, [files, onGetFiles])
 
 	return (
 		<Card className="w-full max-w-md">
