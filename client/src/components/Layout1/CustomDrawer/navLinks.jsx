@@ -58,6 +58,26 @@ const navLinks = [
 				url: '/page/components/file-chooser',
 				role: 'admin',
 			},
+			{
+				title: 'Blog',
+				icon: <Table />,
+				type: 'collapse',
+				role: 'admin',
+				children: [
+					{
+						title: 'Preview',
+						icon: <Table />,
+						url: '/page/components/blog/preview',
+						role: 'admin',
+					},
+					{
+						title: 'Editor',
+						icon: <Table />,
+						url: '/page/components/blog/editor',
+						role: 'admin',
+					},
+				],
+			}
 		],
 	},
 ]

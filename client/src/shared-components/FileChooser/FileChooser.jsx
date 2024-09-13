@@ -12,7 +12,6 @@ import { Button } from '@/components/ui/button'
 import { useDropzone } from 'react-dropzone'
 import generateId from '@/plugins'
 import CustomButton from '../CustomButton'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import { useEffect } from 'react'
 
 /**
@@ -77,7 +76,7 @@ export default function FileChooser({
 					<input {...getInputProps()} />
 
 					{files.length > 0 ? (
-						<ScrollArea className={`grid gap-2 ${heightContainer} p-3`}>
+						<div className={`grid gap-2 ${heightContainer} p-3 overflow-y-auto scroll-smooth`}>
 							{files.map((file) => {
 								const { size, name } = file.file
 								return (
@@ -106,7 +105,7 @@ export default function FileChooser({
 									</div>
 								)
 							})}
-						</ScrollArea>
+						</div>
 					) : (
 						<div className="text-center">
 							<CloudUploadIcon className="mx-auto h-8 w-8 text-muted-foreground" />

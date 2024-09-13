@@ -17,6 +17,8 @@ const ProtectedLayout = ({ children }) => {
 		fetchAuth()
 	}, [])
 
+	console.log('ProtectedLayout isUserAuth ==>', isUserAuth)
+
 	if (isUserAuth === null || isUserAuth === undefined) {
 		return <ScreenLoader />
 	}

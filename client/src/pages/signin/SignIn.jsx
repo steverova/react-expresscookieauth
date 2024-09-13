@@ -61,11 +61,12 @@ export default function SignIn() {
 
 	console.log('isAuthenticated ==>', isAuthenticated)
 
-	useEffect(() => {
-		if (isAuthenticated) {
-			navigate(ROUTES.DASHBOARD)
-		}
-	}, [])
+	// useEffect(() => {
+	// 	if (isAuthenticated) {
+	// 		console.log('isAuthenticated ==>', isAuthenticated)
+	// 		navigate('/page/dashboard')
+	// 	}
+	// }, [])
 
 	return (
 		<div className="w-full h-screen lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
