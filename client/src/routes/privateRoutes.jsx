@@ -1,9 +1,8 @@
 import { CustomDashboard } from '@/components/CustomDashboard/Index'
 import { Layout1 } from '@/components/Layout1/Layout1'
 import ProtectedLayout from '@/components/ProtectedLayout'
+import DataTableexample from '@/pages/DataTableExample/DataTableExample'
 import BlogView from '@/shared-components/BlogView'
-
-import { BasicDatatable } from '@/shared-components/CustomDataTable/BasicDatatable'
 import FileChooser from '@/shared-components/FileChooser/FileChooser'
 import GradientBackground from '@/shared-components/GradientBackground'
 import { Navigate } from 'react-router-dom'
@@ -34,11 +33,11 @@ const privateRoutes = [
 				children: [
 					{
 						path: 'table',
-						element: <BasicDatatable />,
+						element: <DataTableexample />,
 					},
 					{
 						path: 'table/:page',
-						element: <BasicDatatable />,
+						element: <DataTableexample />,
 					},
 					{
 						path: 'dialog',

@@ -1,4 +1,4 @@
-export default function GradientBackground({ children, colorHex = '#fbfbfb', patternColor='09090b' }) {
+export default function GradientBackground({ children, colorHex = '#1a3052', patternColor='white' }) {
 	return (
 		<div
 			className={`min-h-screen bg-gradient-to-b from-[${colorHex}] to-black relative overflow-hidden`}>

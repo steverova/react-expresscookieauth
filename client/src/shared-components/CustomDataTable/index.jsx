@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react'
-import { columns, tableData } from './options'
-import { useLocation } from 'react-router-dom'
 import CustomTable from './Table'
-
 import {
 	getCoreRowModel,
 	getFilteredRowModel,
@@ -10,19 +7,26 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from '@tanstack/react-table'
-import { TablePagination } from './TablePagination'
 import { SelectUI } from '../SelectUI'
+import { Pagination } from './Pagination'
 
-export function BasicDatatable() {
+export function CustomDataTable({
+	columns = [],
+	tableData = [],
+	tableProps = {
+		manualPagination: true,
+		itemsPerPage: 10,
+		currentPage: 1,
+		pageOptions: [5, 10, 15], // Ahora es un array simple de números
+	},
+}) {
 	const [sorting, setSorting] = useState([])
 	const [columnFilters, setColumnFilters] = useState([])
 	const [columnVisibility, setColumnVisibility] = useState({})
 	const [rowSelection, setRowSelection] = useState({})
-	const [itemsPerPage, setItemsPerPage] = useState(10)
-	const location = useLocation()
-	const searchParams = new URLSearchParams(location.search)
-	const currentPage = Number.parseInt(searchParams.get('page')) || 1
-	const [pages, setPages] = useState(tableData.length / itemsPerPage)
+	const [itemsPerPage, setItemsPerPage] = useState(tableProps.itemsPerPage)
+	const [currentPage, setCurrentPage] = useState(tableProps.currentPage)
+
 	const [data, setData] = useState(
 		tableData.slice(
 			(currentPage - 1) * itemsPerPage,
@@ -37,13 +41,12 @@ export function BasicDatatable() {
 				currentPage * itemsPerPage,
 			),
 		)
-		setPages(Math.ceil(tableData.length / itemsPerPage))
 	}, [currentPage, itemsPerPage])
 
 	const table = useReactTable({
 		manualPagination: true,
 		data: data,
-		columns,
+		columns: columns,
 		onSortingChange: setSorting,
 		onColumnFiltersChange: setColumnFilters,
 		getCoreRowModel: getCoreRowModel(),
@@ -64,31 +67,27 @@ export function BasicDatatable() {
 		<>
 			<CustomTable table={table} columns={columns} />
 
-			<div className='flex flex-row justify-between py-3 '>
-				<div className='text-sm text-muted-foreground w-2/6 '>
+			<div className="flex flex-row justify-between py-1 items-center">
+				<div className="text-sm text-muted-foreground w-2/6 ">
 					{table.getFilteredSelectedRowModel().rows.length} of{' '}
 					{table.getFilteredRowModel().rows.length} row(s) selected.
 				</div>
-				<TablePagination className='w-2/6 ' pages={pages} />
-				<div className='w-2/6 flex justify-end  '>
+
+				<Pagination
+					totalItems={tableData.length}
+					itemsPerPage={itemsPerPage}
+					onPageChange={setCurrentPage}
+				/>
+
+				<div className="w-2/6 flex justify-end">
 					<SelectUI
-					  defaultValue={itemsPerPage}
+						defaultValue={itemsPerPage}
 						onValueChange={(value) => setItemsPerPage(value)}
-						placeholderText='Pages'
-						options={[
-							{
-								label: 5,
-								value: 5,
-							},
-							{
-								label: 10,
-								value: 10,
-							},
-							{
-								label: 15,
-								value: 15,
-							},
-						]}
+						placeholderText="Pages"
+						options={tableProps.pageOptions.map(option => ({
+							label: option,
+							value: option,
+						}))}
 					/>
 				</div>
 			</div>
